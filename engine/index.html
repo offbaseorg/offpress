@@ -1,0 +1,265 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        padding: 10px;
+      }
+      nav {
+        display: flex;
+        align-items: flex-start;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 30px 0px;
+      }
+      nav h1 {
+        font-size: 40px;
+        line-height: 40px;
+        margin: 0;
+      }
+      nav h1 a {
+        text-decoration: none;
+        color: rgba(0,0,0,0.8);
+        font-family: Georgia;
+        font-style: italic;
+        letter-spacing: -2px;
+        text-transform: lowercase;
+      }
+      .hidden {
+        display: none;
+      }
+      .flexible {
+        flex-grow: 1;
+      }
+      nav button, nav .button {
+        margin: 3px;
+        border-radius: 1px;
+        background: none;
+        border: none;
+        color: rgba(0,0,0,0.8);
+        text-decoration: none;
+        font-size: 14px;
+        display: inline-block;
+        cursor: pointer;
+        padding: 0;
+      }
+      nav button svg, nav .button svg {
+        width: 20px;
+        height: 20px;
+      }
+      .container {
+        margin: 0px auto;
+        max-width: 600px;
+        width: 100%;
+      }
+      .flex {
+        display: flex !important;
+      }
+      .row {
+        display: block;
+        text-decoration: none;
+        font-size: 20px;
+        color: rgba(0,0,0,0.7);
+        font-family: Sans-serif;
+        padding: 15px 0;
+        border-top: 1px solid rgba(0,0,0,0.04);
+      }
+      .row .title {
+        font-size: 20px;
+        line-height: 20px;
+        margin: 0;
+      }
+      .row .footer {
+        font-style: normal;
+        font-family: sans-serif;
+        font-size: 14px;
+        color: silver;
+        display: flex;
+      }
+      .row:hover {
+        color: black;
+      }
+      body {
+        margin: 0;
+        font-size: 14px;
+        color: rgba(0,0,0,0.7);
+        line-height: 20px;
+      }
+      footer {
+        text-align: center;
+        padding: 50px 0;
+      }
+      footer a {
+        color: rgba(0,0,0,0.6);
+        display: inline-block;
+        margin: 5px;
+        padding: 2px 5px;
+      }
+      footer a.current {
+        text-decoration: none;
+      }
+      #menu-button {
+        font-weight: bold;
+        margin: 0;
+        padding: 10px;
+        outline: none;
+      }
+      #menu-button img {
+        width: 25px;
+      }
+      .menu {
+        text-align: right;
+      }
+      .menu-items {
+        transition: max-height 0.3s ease-in-out;
+        max-height: 200px;
+        overflow: hidden;
+      }
+      .menu-items.collapsed {
+        max-height: 0;
+      }
+      .menu-items a {
+        display: block;
+        padding: 10px;
+        color: rgba(0,0,0,0.8);
+        text-decoration: none;
+        font-size: 14px;
+      }
+      .badge {
+        color: rgba(0,0,0,0.4);
+        background: rgba(0,0,0,0.1);
+        padding: 2px 10px;
+        border-radius: 20px;
+        display: inline-block;
+      }
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black;
+      }
+      .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        padding: 4px 0;
+        border-radius: 2px;
+
+        position: absolute;
+        z-index: 1;
+
+        font-size: 12px;
+        line-height: 12px;
+        top: 100%;
+        left: 50%;
+        margin-left: -60px;
+        margin-top: 5px;
+      }
+      .tooltip:hover .tooltiptext {
+        visibility: visible;
+      }
+      .tooltip .tooltiptext::after {
+        content: " ";
+        position: absolute;
+        bottom: 100%;  /* At the top of the tooltip */
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent black transparent;
+      }
+    </style>
+    <script id="template" type="text/x-handlebars-template">
+    <nav>
+      <h1><a href="/">offpress</a></h1>
+      <div class='flexible'></div>
+      <div class='menu'>
+        <a class='tooltip button' href="./editor"> <?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg id="i-compose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"  fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"> <path d="M27 15 L27 30 2 30 2 5 17 5 M30 6 L26 2 9 19 7 25 13 23 Z M22 6 L26 10 Z M9 19 L13 23 Z" /> </svg><span class="tooltiptext">New Post</span>
+ </a>
+        <button class='tooltip button' id='upload'>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>cloud, upload, storage, memory, data</title><path d="M20.57,9.43A8,8,0,0,0,5.26,10,5,5,0,1,0,5,20h5V18H5a3,3,0,0,1,0-6,3.1,3.1,0,0,1,.79.12l1.12.31.14-1.15a6,6,0,0,1,11.74-.82l.15.54.54.16A3.46,3.46,0,0,1,22,14.5,3.5,3.5,0,0,1,18.5,18H16v2h2.5A5.48,5.48,0,0,0,20.57,9.43Z"/><polygon points="16.71 15.29 13 11.59 9.29 15.29 10.71 16.71 12 15.41 12 20 14 20 14 15.41 15.29 16.71 16.71 15.29"/></svg><span class="tooltiptext">Publish</span></button>
+        <a class='tooltip button' href='./settings'> <?xml version="1.0" encoding="utf-8"?> <!-- Generator: Adobe Illustrator 23.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  --> <svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;" xml:space="preserve"> <style type="text/css"> .st0{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;} </style> <path class="st0" d="M28.6,13c-1.6,0.2-3.1-0.5-4-2c-0.8-1.4-0.7-3.2,0.3-4.4c-1.5-1.4-3.3-2.4-5.2-3C19.1,5,17.7,6,16,6 s-3.1-1-3.7-2.5c-2,0.6-3.8,1.6-5.2,3C8,7.8,8.2,9.6,7.3,11c-0.8,1.4-2.4,2.2-4,2c-0.2,1-0.4,2-0.4,3c0,1,0.1,2.1,0.4,3 c1.6-0.2,3.1,0.5,4,2c0.8,1.4,0.7,3.2-0.3,4.4c1.5,1.4,3.3,2.4,5.2,3c0.6-1.4,2-2.5,3.7-2.5s3.1,1,3.7,2.5c2-0.6,3.8-1.6,5.2-3 c-0.9-1.2-1.1-3-0.3-4.4c0.8-1.4,2.4-2.2,4-2c0.2-1,0.4-2,0.4-3C29,15,28.9,13.9,28.6,13z"/> <circle class="st0" cx="16" cy="16" r="3"/> </svg><span class="tooltiptext">Settings</span></a>
+      </div>
+    </nav>
+    <div class='container'>
+    {{#each items}}
+      <a class='row' href="./editor?src={{filename}}">
+        {{#if meta.title }}
+          <h2 class='title'>{{meta.title}}</h2>
+        {{else}}
+          <h2 class='title'>{{filename}}</h2>
+        {{/if}}
+        <div class='footer'>
+          <div class='updated'>{{meta.updated}}</div>
+          <div class='flexible'></div>
+          {{#if meta.draft}}
+          <div class='badge'>draft</div>
+          {{/if}}
+        </div>
+        {{!--
+          {{#if meta.description }}
+            <div class='description'>{{meta.description}}</div>
+          {{/if}}
+          {{#if meta.image }}
+            <div class='image'>
+              <img src="./{{meta.image}}">
+            </div>
+          {{/if}}
+        --}}
+      </a>
+    {{/each}}
+    </div>
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timeago.js/4.0.2/timeago.min.js"></script>
+  </head>
+  <body>
+    <script type='module'>
+    import Handlebars from "https://jspm.dev/handlebars"
+    import matter from "https://jspm.dev/gray-matter"
+    import { fs, git, config } from "/offbase.js"
+    import { Builder } from "./js/builder.js"
+
+    const PATH = "/home/src"
+    const render = async (template, path) => {
+      let filenames = await fs.promises.readdir(path).catch((e) => { })
+      if (filenames) {
+        let promises = filenames.filter((filename) => {
+          return filename !== "assets"
+        }).map((filename) => {
+          return fs.promises.readFile(path + "/" + filename, "utf8").then((content) => {
+            let parsed = matter(content)
+            let md = parsed.content
+            let metadata = parsed.data
+            metadata.permalink = filename
+            return {
+              filename: path + "/" + filename,
+              meta: metadata
+            }
+          })
+        })
+        let items = await Promise.all(promises)
+        items.sort((a, b) => parseInt(b.meta.updated) - parseInt(a.meta.updated));
+        return template({ items: items })
+      } else {
+        return template({ items: [] })
+      }
+    }
+
+    render(Handlebars.compile(document.querySelector("#template").innerHTML), PATH).then((content) => {
+      document.body.innerHTML = content
+      document.querySelectorAll(".updated").forEach((el) => {
+        el.textContent = timeago.format(parseInt(el.textContent))
+      })
+      document.querySelector("#upload").addEventListener("click", async (e) => {
+        let c = await config()
+        let builder = new Builder({ fs, git, config: c })
+        await builder.build()
+        location.href = "/upload"
+      })
+    })
+    </script>
+  </body>
+</html>

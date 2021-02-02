@@ -1,0 +1,42 @@
+{
+  "name": "superblog",
+  "description": "superblog",
+  "routes": [{
+    "from": "/assets/:path",
+    "to": "/home/src/assets/{{path}}"
+  }, {
+    "from": "/about",
+    "to": "/bin/engine/about.html"
+  }, {
+    "from": "/about/:x.:ext",
+    "to": "/bin/{{x}}.{{ext}}"
+  }, {
+    "from": "/js/:filename.js",
+    "to": "/bin/engine/js/{{filename}}.js",
+    "type": "application/javascript"
+  }, {
+    "from": "/settings",
+    "to": "/lib/settings/index.html"
+  }, {
+    "from": "/editor",
+    "to": "/bin/engine/editor.html"
+  }, {
+    "from": "/post",
+    "to": "/bin/engine/post.html"
+  }, {
+    "from": "/",
+    "to": "/bin/engine/index.html",
+    "type": "text/html"
+  }, {
+    "from": "/blog/post/:path",
+    "to": "/home/blog/post/{{path}}/index.html"
+  }, {
+    "from": "/lib/:path",
+    "to": "/lib/{{path}}/index.js",
+    "type": "application/javascript"
+  }, {
+    "from": "/plugin/:lib/:filename",
+    "to": "/lib/{{lib}}/{{filename}}.js",
+    "type": "application/javascript"
+  }]
+}

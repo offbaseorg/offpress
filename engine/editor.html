@@ -1,0 +1,194 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/codemirror.min.css" />
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+<style>
+html {
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  margin: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: Sans-serif;
+}
+nav {
+  display: flex;
+  align-items: center;
+}
+nav .draft {
+  color: rgba(0,0,0,0.6);
+  padding: 5px 10px;
+  border-radius: 2px;
+  font-size: 14px;
+}
+.container {
+  flex-grow: 1;
+  display: flex;
+}
+#editor {
+  flex-grow: 1;
+}
+.container iframe {
+  border: none;
+  width: 500px;
+  height: 100%;
+}
+.flexible {
+  flex-grow: 1;
+}
+.brand {
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: rgba(0,0,0,0.8);
+  font-family: Georgia;
+  font-style: italic;
+  margin: 0 10px;
+}
+.hidden {
+  display: none;
+}
+nav .link {
+  color: rgba(0,0,0,0.8);
+  text-decoration: none;
+  font-size: 14px;
+  padding: 5px;
+}
+nav button, nav .button {
+  margin: 5px;
+  padding: 5px 10px;
+  border-radius: 2px;
+  background: none;
+  border: none;
+  color: rgba(0,0,0,0.8);
+  text-decoration: none;
+  font-size: 14px;
+  display: inline-block;
+  cursor: pointer;
+}
+nav button.enabled, nav .button.enabled {
+  background: rgba(0,0,0,0.8);
+  color: white;
+}
+.menu-items {
+  text-align: right;
+}
+.menu-items a {
+  display: block;
+  padding: 10px 15px;
+  color: rgba(0,0,0,0.8);
+  text-decoration: none;
+  font-size: 14px;
+}
+.sidebar .file {
+  cursor: pointer;
+  padding: 10px;
+  font-size: 14px;
+  text-decoration: none;
+  color: rgba(0,0,0,0.8);
+  display: block;
+}
+.file.selected {
+  background: rgba(0,0,0,0.1);
+}
+.swal2-content .images img {
+  height: 100px;
+  cursor: pointer;
+  border: 3px solid white;
+  box-sizing: border-box;
+}
+.swal2-content .images img.selected {
+  border: 3px solid royalblue;
+}
+.swal2-content .publish-form > * {
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 0;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+.swal2-content .publish-form textarea {
+  height: 150px;
+}
+.swal2-content .publish-form .images {
+  width: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+  padding: 0;
+  text-align: left;
+  border: none;
+}
+.swal2-modal {
+  border-radius: 0 !important;
+}
+.swal2-modal {
+  text-align: left;
+  border-radius: 0 !important;
+}
+.swal2-title {
+  letter-spacing: -1px !important;
+  width: 100% !important;
+  margin: 20px 0 !important;
+  font-size: 20px !important;
+  text-align: left !important;
+}
+.swal2-confirm, .swal2-deny {
+  color: white !important;
+  border-radius: 2px !important;
+  background: rgba(0,0,0,0.8) !important;
+  padding: 5px 15px !important;
+}
+.tui-editor-defaultUI-toolbar button.full-expand {
+  color: rgba(0,0,0,0.7) !important;
+  width: 40px !important;
+  font-weight: bold !important;
+}
+.tui-editor-defaultUI-toolbar button.medium-expand {
+  color: rgba(0,0,0,0.7) !important;
+  width: 30px !important;
+  font-weight: bold !important;
+}
+.separator {
+  width: 1px;
+  background: rgba(0,0,0,0.2);
+  height: 100%;
+  margin: 0 5px;
+}
+</style>
+</head>
+<body>
+<nav>
+<a class='brand' href='./'>Offpress</a>
+<a target="_blank" href="./about" class='link'>help</a>
+<div class='flexible'></div>
+<div class='draft hidden'>private</div>
+<button id='save' class='button'>save</button>
+<button id='delete' class='button enabled'>delete</button>
+<button id='preview' class='enabled'>preview</button>
+<div class='separator'></div>
+<button id='unpublish' class='enabled'>unpublish</button>
+<button id='publish' class='enabled'>publish</button>
+</nav>
+<div class='container'>
+  <div id='editor'></div>
+</div>
+<script type='module'>
+import { fs, git, config } from "/offbase.js"
+import { Model } from "./js/model.js"
+import { View } from "./js/view.js"
+var src = new URL(location.href).searchParams.get("src");
+if (src) src = decodeURIComponent(src);
+(async () => {
+  let c = await config()
+  let model = new Model({ fs, git, src, config: c })
+  let view = new View({ model: model })
+})();
+</script>
+</body>
+</html>

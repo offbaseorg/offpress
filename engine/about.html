@@ -1,0 +1,114 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <base href=".">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      body {
+        margin: 0;
+        margin-top: 100px;
+        font-family: Sans-serif;
+        font-size: 14px;
+        color: rgba(0,0,0,0.8);
+        line-height: 20px;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+      hr {
+        background: rgba(0,0,0,0.05);
+        border: none;
+        height: 2px;
+        margin: 40px auto !important
+      }
+      h1 {
+        font-size: 40px;
+        line-height: 40px;
+        font-family: Georgia;
+        font-style: italic;
+      }
+      h1 a {
+        text-decoration: none;
+        color: rgba(0,0,0,0.8);
+      }
+      header {
+        margin: 0px auto;
+        max-width: 600px;
+      }
+      header h1 {
+        font-style: italic;
+        font-family: Georgia;
+      }
+      main {
+        margin: 0px auto;
+      }
+      main > .full-image {
+        width: 100%;
+      }
+      main > :not(.full-image) {
+        display: block;
+        max-width: 600px;
+        margin: 20px auto;
+      }
+      main img {
+        width: 100%;
+      }
+      blockquote {
+        font-size: 20px;
+        line-height: 28px;
+        margin: 30px 0;
+        box-shadow: inset 3px 0 0 0 rgba(41, 41, 41, 1);
+        font-family: Georgia;
+        font-style: italic;
+        color: rgba(0,0,0,0.8);
+        padding-left: 20px;
+      }
+      pre {
+        background: rgba(0,0,0,0.7);
+        padding: 10px;
+        overflow: auto;
+        color: white;
+      }
+      .flexible {
+        flex-grow: 1;
+      }
+      .meta {
+        display: flex;
+        max-width: 600px;
+        margin: 20px auto;
+        color: silver;
+      }
+      .draft {
+        max-width: 600px;
+        margin: 0px auto;
+      }
+      .badge {
+        color: rgba(0,0,0,0.4);
+        background: rgba(0,0,0,0.1);
+        padding: 2px 10px;
+        border-radius: 20px;
+        display: inline-block;
+      }
+      .button {
+        text-decoration: none;
+        color: rgba(0,0,0,0.5);
+      }
+    </style>
+    <script id="template" type="text/x-handlebars-template">
+      <main>{{{content}}}</main>
+    </script>
+  </head>
+  <body>
+    <script type='module'>
+    import Handlebars from "https://jspm.dev/handlebars"
+    import marked from "https://jspm.dev/marked"
+    import { fs } from "/offbase.js"
+    const template = Handlebars.compile(document.querySelector("#template").innerHTML)
+    fs.promises.readFile("/bin/README.md", "utf8").then((content) => {
+      const html = marked(content, { baseUrl: "./about/" })
+      document.body.innerHTML = template({
+        content: html,
+      }).trim()
+    })
+    </script>
+  </body>
+</html>
