@@ -44,17 +44,22 @@ export class Model {
     await this.fs.promises.writeFile(this.src, updatedContent)
   }
   async publish({ content, data }) {
-    data.draft = false;
-    let updatedContent = matter.stringify(content, data)
-    await this.fs.promises.writeFile(this.src, updatedContent)
-    let updated = await this.updated()
-    if (updated.length === 0) {
-      console.log("no update")
-      alert("no update")
+    if (this.src) {
+      data.draft = false;
+      let updatedContent = matter.stringify(content, data)
+      await this.fs.promises.writeFile(this.src, updatedContent)
+      let updated = await this.updated()
+      if (updated.length === 0) {
+        console.log("no update")
+        alert("no update")
+        return false;
+      }
+      await this.builder.build()
+      return true;
+    } else {
+      alert("you must save first")
       return false;
     }
-    await this.builder.build()
-    return true;
   }
   async save( { content, data, raw }) {
     let matches = raw.matchAll(/!\[.*?\]\((.*?)\)/g)
@@ -131,10 +136,14 @@ export class Model {
   }
   // Remove the current file from the file system, and then remove from git
   async destroy() {
-    let name = this.src.split("/")[3]
-    await this.fs.promises.unlink(`${this.config.settings.SRC}/${name}`).catch((e) => {})
-    await this.fs.promises.unlink(`${this.config.settings.DEST}/post/${name}/index.html`).catch((e) => { })
-    await this.fs.promises.rmdir(`${this.config.settings.DEST}/post/${name}`).catch((e) => { })
+    if (this.src) {
+      let name = this.src.split("/")[3]
+      await this.fs.promises.unlink(`${this.config.settings.SRC}/${name}`).catch((e) => {})
+      await this.fs.promises.unlink(`${this.config.settings.DEST}/post/${name}/index.html`).catch((e) => { })
+      await this.fs.promises.rmdir(`${this.config.settings.DEST}/post/${name}`).catch((e) => { })
+    } else {
+      alert("you must save first")
+    }
   }
   async saveImage(blob, callback) {
     let ab = await blob.arrayBuffer()
