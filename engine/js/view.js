@@ -104,12 +104,7 @@ export class View {
     document.querySelector("#save").addEventListener("click", async (e) => {
       let c = this.content()
       let { status, path } = await this.model.save(c)
-      if (status === "created") {
-        location.href = "./editor?src=" + path;
-      } else {
-        document.querySelector("#save").classList.remove("enabled")
-        this.editor.setMarkdown(c.raw)
-      }
+      location.href = "./editor?src=" + path;
     });
   }
   async fill (path) {
