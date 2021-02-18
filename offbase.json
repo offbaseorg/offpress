@@ -29,7 +29,7 @@
     "type": "text/html"
   }, {
     "from": "/blog/post/:path",
-    "to": "/home/blog/post/{{path}}/index.html"
+    "to": "/home/post/{{path}}/index.html"
   }, {
     "from": "/lib/:path",
     "to": "/lib/{{path}}/index.js",
