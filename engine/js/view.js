@@ -1,5 +1,5 @@
 import matter from "https://jspm.dev/gray-matter"
-import Editor from "https://jspm.dev/@toast-ui/editor"
+import Editor from "https://jspm.dev/@toast-ui/editor@2.5.2"
 import Swal from "https://jspm.dev/sweetalert2"
 export class View {
   constructor (o) {
